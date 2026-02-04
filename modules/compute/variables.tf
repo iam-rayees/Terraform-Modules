@@ -1,0 +1,10 @@
+variable "amis" {}
+variable "aws_region" {}
+variable "environment" {}
+variable "key_name" {}
+variable "vpc_name" {}
+variable "public_subnet_id" {}
+variable "sg_id" {}
+variable "private_subnet_id" {}
+variable "iam_instance_profile" {}
+variable "elb_listener_public" {}

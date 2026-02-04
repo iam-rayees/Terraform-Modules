@@ -3,14 +3,15 @@ resource "aws_instance" "public-instance" {
   count                       = var.environment == "production" ? 3 : 1
   instance_type               = "t2.micro"
   key_name                    = var.key_name
-  subnet_id                   = element(var.public-subnet, count.index)
+  subnet_id                   = element(var.public_subnet_id, count.index)
   vpc_security_group_ids      = ["${var.sg_id}"]
+  iam_instance_profile        = var.iam_instance_profile
   associate_public_ip_address = true
   tags = {
     Name        = "${var.vpc_name}-Public-Server-${count.index + 1}"
     environment = var.environment
   }
-  user_data = <<-EOF
+  user_data  = <<-EOF
     #!/bin/bash
     set -euxo pipefail
     exec > /var/log/user-data.log 2>&1
@@ -26,11 +27,12 @@ resource "aws_instance" "public-instance" {
     cp /tmp/Cloud-Spectrum-Master/style.css /var/www/html/style.css
     cp /tmp/Cloud-Spectrum-Master/script.js /var/www/html/script.js
 
-    # Inject Server Name into index.html
     sed -i "s|<body>|<body><h1>Server Name: ${var.vpc_name}-Public-Server-${count.index + 1}</h1>|g" /var/www/html/index.html
-    
+
     systemctl restart nginx
     systemctl enable nginx
 
-  EOF
+  EOF 
+  depends_on = [var.elb_listener_public]
+
 }

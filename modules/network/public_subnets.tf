@@ -1,8 +1,8 @@
 resource "aws_subnet" "public-subnet" {
-  count             = length(var.public_subnet_cidr)
+  count             = length(var.public_cidr_block)
   vpc_id            = aws_vpc.VPC-Terra.id
-  cidr_block        = element(var.public_subnet_cidr, count.index)
-  availability_zone = element(var.az_name, count.index)
+  cidr_block        = element(var.public_cidr_block, count.index)
+  availability_zone = element(var.azs, count.index)
 
   tags = {
     Name        = "${var.vpc_name}-public-subnet-${count.index + 1}"

@@ -3,8 +3,9 @@ resource "aws_instance" "private-instance" {
   count                  = var.environment == "production" ? 3 : 1
   instance_type          = "t2.micro"
   key_name               = var.key_name
-  subnet_id              = element(var.private-subnet, count.index)
+  subnet_id              = element(var.private_subnet_id, count.index)
   vpc_security_group_ids = ["${var.sg_id}"]
+  iam_instance_profile   = var.iam_instance_profile
   tags = {
     Name        = "${var.vpc_name}-private-Server-${count.index + 1}"
     environment = var.environment
@@ -25,11 +26,12 @@ resource "aws_instance" "private-instance" {
     cp /tmp/Cloud-Spectrum-Master/style.css /var/www/html/style.css
     cp /tmp/Cloud-Spectrum-Master/script.js /var/www/html/script.js
 
-    # Inject Server Name into index.html
     sed -i "s|<body>|<body><h1>Server Name: ${var.vpc_name}-private-Server-${count.index + 1}</h1>|g" /var/www/html/index.html
-    
+
     systemctl restart nginx
     systemctl enable nginx
 
-  EOF
+  EOF 
+  depends_on = [var.elb_listener_public]
+
 }

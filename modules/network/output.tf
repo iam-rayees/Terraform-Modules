@@ -1,9 +1,3 @@
-# These will be used while modules are importing to development and production environments.
-
-output "vpc_name" {
-  value = var.vpc_name
-}
-
 output "vpc_id" {
   value = aws_vpc.VPC-Terra.id
 }
@@ -12,18 +6,18 @@ output "environment" {
   value = var.environment
 }
 
-output "public-subnet" {
+output "vpc_name" {
+  value = var.vpc_name
+}
+
+output "public_subnet_id_1" {
+  value = aws_subnet.public-subnet[0].id
+}
+
+output "public_subnet_id" {
   value = aws_subnet.public-subnet[*].id
 }
 
-output "private-subnet" {
+output "private_subnet_id" {
   value = aws_subnet.private-subnet[*].id
-}
-
-output "public_route_table_id" {
-  value = aws_route_table.Public-RT-Terra.id
-}
-
-output "private_route_table_id" {
-  value = aws_route_table.private-RT-Terra.id
 }
