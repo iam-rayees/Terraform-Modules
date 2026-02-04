@@ -181,10 +181,17 @@ terraform apply
   ```bash
   terraform state list
   ```
-
+---
 ## Notes on Output Values
 
 The `output.tf` files in each module play a crucial role in passing data between modules. For example, the VPC module exports the `vpc_id`, which is consumed by the Security Group module and EC2 module. This modular approach helps ensure that all components are properly linked, and their dependencies are clear.
+
+---
+## Expected Output:
+<img width="1919" height="994" alt="Screenshot 2026-02-04 134219" src="https://github.com/user-attachments/assets/555c45fc-3027-4c64-985e-3f8579085c7d" />
+
+---
+<img width="1919" height="1014" alt="Screenshot 2026-02-04 132517" src="https://github.com/user-attachments/assets/f21f2881-17dd-4a5d-a2e8-c98699642fdb" />
 
 ## Conclusion
 
