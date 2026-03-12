@@ -33,7 +33,7 @@ module "dev_instance_1" {
   }
   aws_region           = var.aws_region
   environment          = module.dev_vpc_1.environment
-  key_name             = "Linux_secfile"
+  key_name             = "DevOps-Key"
   vpc_name             = module.dev_vpc_1.vpc_name
   public_subnet_id     = module.dev_vpc_1.public_subnet_id
   sg_id                = module.dev_sg_1.sg_id
